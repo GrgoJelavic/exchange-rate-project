@@ -6,6 +6,8 @@
  */
 
 require('./system/core.functions.php');
+require('./system/util/RequestHandler.class.php');
+
 /**
  * Main class of the application
  */
@@ -17,6 +19,7 @@ class AppCore
     {
         $this->initDB();
         $this->initOptions();
+        RequestHandler::handle();
     }
 
     /**
