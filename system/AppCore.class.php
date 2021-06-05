@@ -25,8 +25,9 @@ class AppCore
     /**
      * Handles exceptions
      */
-    public static function handleException(Exception $e)
+    public static function handleException(SystemException $e)
     {
+        $e->show();
     }
 
     /**

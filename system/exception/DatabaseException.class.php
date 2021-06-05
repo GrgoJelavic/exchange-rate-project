@@ -17,6 +17,8 @@ class DatabaseException extends Exception
 
     /** 
      * Gets auto functions from exception if there is any error
+     * 
+     * @return string exception details
      */
     public function show()
     {
