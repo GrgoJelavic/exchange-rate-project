@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+
 /**
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
@@ -7,6 +10,8 @@
 
 require('./system/core.functions.php');
 require('./system/util/RequestHandler.class.php');
+require('./system/exception/SystemException.class.php');
+
 
 /**
  * Main class of the application
@@ -25,9 +30,10 @@ class AppCore
     /**
      * Handles exceptions
      */
-    public static function handleException(SystemException $e)
+    public static function handleException($e)
     {
-        $e->show();
+        // echo "Uncaught exceptionnn: ", $e->getMessage(), "\n";
+        echo ("Error: " . $e->getMessage() . "File: " . $e->getFile() . "Linija: " . $e->getLine() . "StackTrace: "  . $e->getTraceAsString());
     }
 
     /**

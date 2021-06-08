@@ -6,6 +6,6 @@
  */
 
 /** 
- * Sets php handleExceptino method for processing Exceptions.
+ * Sets php handleException method for processing Exceptions.
  */
 set_exception_handler(array('AppCore', 'handleException'));

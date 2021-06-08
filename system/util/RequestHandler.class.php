@@ -13,7 +13,7 @@ class RequestHandler
     public function __construct($className)
     {
         $className = $className . 'Page';
-        $classPath = '/opt/lampp/htdocs/exchange-rate-project/system/control/' . $className . '.class.php';
+        $classPath = ROOT_CLASS_PATH . $className . '.class.php';
 
         if (!preg_match('/^[a-z0-9_]+$/i', $className) || !file_exists($classPath)) throw new Exception();
 
