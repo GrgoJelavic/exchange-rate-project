@@ -8,4 +8,4 @@
 /**
  * Application root directory link
  */
-const PAGE_URL = 'http://localhost:8080/exchange-rate-project/';
+const PAGE_URL = 'http://localhost/exchange-rate-project/';
