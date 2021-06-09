@@ -1,52 +1,27 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
+require_once('./system/util/AuthorizeCurrency.class.php');
+require_once('./system/util/SaveCurrency.class.php');
+require_once('./system/util/CheckCurrency.class.php');
+require_once('./system/model/CurrencyAdmin.class.php');
 
 class CreateCurrencyPage
 {
     public function __construct()
     {
-        $latestRates = json_decode(file_get_contents("https://openexchangerates.org/api/latest.json?app_id='" . APP_ID . "'"), true);
+        if (AuthorizeCurrency::checkCurrency($_GET['code'])) {
 
-        // foreach ($latestRates['rates'] as $key => $value) {
-        //print($key . ' ' . $value  . '<br>');
+            if (isset($_GET['curr'])) {
 
-        //var_dump($value);
+                $currency = $_GET['curr'];
+                $code = $_GET['code'];
 
-
-        //ExchangeRate table
-        // $dateFrom = date('Y/m/d', $latestRates['timestamp']);
-        // $sql = "INSERT INTO Currency (code, rate, dateFrom) VALUES ('" . $key . "' , '" . $value . "', '" . $dateFrom . "'  )";
-
-
-        //AllCurrencies 
-
-        // foreach()
-
-        // $sql2 = "INSERT INTO AllCurrencies(code) VALUES ('" . $key . "' )";
-
-        // AppCore::getDB()->sendQuery($sql2);
-
-
-
-        //CurrencyAdmin table CRUD
-
-        //Create currency (insert currency code into database)
-        // $sql2 = "INSERT INTO CurrencyAdmin(code) VALUES ('" . $key . "' )";
-
-        // AppCore::getDB()->sendQuery($sql2);
-        // }
-
-
-
-        //var_dump($latestRates);
-
-        // print(json_encode(json_decode($latestRates, JSON_FORCE_OBJECT), JSON_PRETTY_PRINT));
-
-        // print_r(date('m/d/Y', $latestRates['timestamp']));
-
-        // echo date('d/m/Y', $latestRates['timestamp']);
+                if (CheckCurrency::checkCode($currency)) {
+                    ($currency == $code)
+                        ? SaveCurrency::saveToDB($currency)
+                        : print('ISO code and currency must have same value to save !');
+                } else echo 'Duplicate error - this currency was already saved!';
+            }
+        } else echo 'Unauthorized currency error - ISO code unknown!';
     }
 }

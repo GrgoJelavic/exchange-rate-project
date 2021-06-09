@@ -4,14 +4,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
 
-class FetchPage
+class FetchRatesPage
 {
     public function __construct()
     {
         $latestRates = json_decode(file_get_contents("https://openexchangerates.org/api/latest.json?app_id='" . APP_ID . "'"), true);
 
         foreach ($latestRates['rates'] as $key => $value) {
-            //print($key . ' ' . $value  . '<br>');
+            print($key . ' ' . $value  . '<br>');
 
             //var_dump($value);
 
@@ -23,9 +23,11 @@ class FetchPage
 
             //AllCurrencies 
 
-            $sql2 = "INSERT INTO CurrencyAdmin(code) VALUES ('" . $key . "' )";
+            // $sql2 = "INSERT INTO CurrencyAdmin(code) VALUES ('" . $key . "' )";
 
-            AppCore::getDB()->sendQuery($sql2);
+            // AppCore::getDB()->sendQuery($sql2);
+
+
 
 
 
