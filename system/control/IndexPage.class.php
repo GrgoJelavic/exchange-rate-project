@@ -14,7 +14,7 @@ class IndexPage
         echo 'Hello from Index Page! <br><br> Check the project instructions. <br><br> Currency Administration (crud): <br> 
         - Create: localhost/exchange-rate-project/index.php?page=CreateCurrency&curr=USD&code=USD<br> 
         - Read: localhost/exchange-rate-project/index.php?page=ReadCurrencies <br>
-        - Delete: localhost/exchange-rate-project/index.php?page=DeleteCurrency&currency=USD <br><br>
+        - Delete: localhost/exchange-rate-project/index.php?page=DeleteCurrency&curr=USD <br><br>
         
         Fetch latest rates from openexchangerates.org (json api): <br>
         - Fetch Rates: localhost/exchange-rate-project/index.php?page=FetchRates';

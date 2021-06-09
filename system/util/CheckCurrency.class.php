@@ -10,11 +10,8 @@ class CheckCurrency
 
         $numrow = mysqli_num_rows($result);
 
-        // ($numrow <= 1) ? true : false;
+        if ($numrow > 0) return false;
 
-        if ($numrow > 0) {
-            return false;
-        }
         return true;
     }
 }

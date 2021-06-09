@@ -2,7 +2,6 @@
 
 class DeleteCurrency
 {
-
     public static function deleteFromDB($code)
     {
         $sql = "DELETE FROM CurrencyAdmin WHERE code = '" . $code . "'";
