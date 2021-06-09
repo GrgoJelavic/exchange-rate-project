@@ -7,16 +7,8 @@ ini_set('display_errors', 'on');
 /**
  * DatabaseHelper interacts with database
  * 
- * @method saveCountry
- * @method deleteCountry
- * @method updateCountry
- * @method getCountries
- * 
- * @method getData
- * @method getDataLastDays
- * @method insertData
- * @method getUserIdQuery
- * @method convertToFloat
+ * @method saveCurrency
+ * @method getCurrencies
  */
 class DatabaseHelper
 {
@@ -36,9 +28,8 @@ class DatabaseHelper
 
         $result = AppCore::getDB()->sendQuery($sql);
 
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc())
             $currencies[] = $row;
-        }
 
         return $currencies;
     }
