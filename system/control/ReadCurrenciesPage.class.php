@@ -1,11 +1,10 @@
 <?php
 
-require_once('./system/util/ReadCurrency.class.php');
-
+require_once('./system/util/CurrencyAdminHelper.class.php');
 class ReadCurrenciesPage
 {
     public function __construct()
     {
-        ReadCurrency::showCurrencyAdmin();
+        CurrencyAdminHelper::ReadCurrencies();
     }
 }

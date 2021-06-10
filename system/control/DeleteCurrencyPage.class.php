@@ -1,7 +1,7 @@
 <?php
 
-require_once('./system/util/DeleteCurrency.class.php');
-require_once('./system/util/CheckCurrency.class.php');
+require_once('./system/util/CurrencyAdminHelper.class.php');
+
 
 class DeleteCurrencyPage
 {
@@ -9,11 +9,11 @@ class DeleteCurrencyPage
     {
         if (isset($_GET['curr'])) {
 
-            $currency = $_GET['curr'];
+            $code = $_GET['curr'];
 
-            (!CheckCurrency::checkCode($currency))
-                ? DeleteCurrency::deleteFromDB($currency)
-                : print('This currency was not in the database so there is nothing to delete!');
+            (!CurrencyAdminHelper::checkCurrencyInDb($code))
+                ? CurrencyAdminHelper::deleteCurrency($code)
+                : print($code . ' was not in the database so can not be deleted!');
         }
     }
 }
