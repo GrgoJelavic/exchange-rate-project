@@ -10,7 +10,7 @@ ini_set('display_errors', 'on');
  * @method 
  * @method getCurrencvies
  */
-class CurrencyAdminHelper
+class CurrencyAdminHandler
 {
     public static function checkCurrencyInDb($code)
     {
@@ -47,7 +47,8 @@ class CurrencyAdminHelper
         return true;
     }
 
-    public static function ReadCurrencies()
+
+    public static function readCurrencies()
     {
         $sql = "SELECT code FROM CurrencyAdmin";
 

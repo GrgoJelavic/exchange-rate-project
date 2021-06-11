@@ -28,7 +28,7 @@ class RequestHandler
     }
 
     /**
-     * Handles a HTTP request
+     * Handles a HTTP request (router)
      */
     public static function handle()
     {
