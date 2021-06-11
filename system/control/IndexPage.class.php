@@ -4,12 +4,17 @@
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
+
+require('AbstractPage.class.php');
 /**
  * Index page presents the instructions
  */
-class IndexPage
+class IndexPage extends AbstractPage
 {
-    public function __construct()
+    /**
+     * IndexPage displays the project instructions for use
+     */
+    public function code()
     {
         echo 'Hello from Index Page! <br><br> Check the project instructions. <br><br> Currency Administration (crud): <br> 
         - Create: localhost/exchange-rate-project/index.php?page=CreateCurrency&code=USD<br> 

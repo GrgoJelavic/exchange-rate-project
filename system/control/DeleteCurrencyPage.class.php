@@ -1,18 +1,29 @@
 <?php
 
-require_once('./system/util/CurrencyAdminHelper.class.php');
+/**
+ * Authors: Katija Juric, Grgo Jelavic
+ * @copyright 2021 - Exchange rate REST API
+ */
 
+require('AbstractPage.class.php');
+require_once('./system/util/CurrencyAdminHandler.class.php');
 
-class DeleteCurrencyPage
+/**
+ * DeleteCurrencyPage deletes iso currency code (deletes selected code in the database)
+ */
+class DeleteCurrencyPage extends AbstractPage
 {
-    public function __construct()
+    /**
+     * DeleteCurrencyPage logic
+     */
+    public function code()
     {
-        if (isset($_GET['curr'])) {
+        if (isset($_GET['code'])) {
 
-            $code = $_GET['curr'];
+            $code = $_GET['code'];
 
-            (!CurrencyAdminHelper::checkCurrencyInDb($code))
-                ? CurrencyAdminHelper::deleteCurrency($code)
+            (!CurrencyAdminHandler::checkCurrencyInDb($code))
+                ? CurrencyAdminHandler::deleteCurrency($code)
                 : print($code . ' was not in the database so can not be deleted!');
         }
     }

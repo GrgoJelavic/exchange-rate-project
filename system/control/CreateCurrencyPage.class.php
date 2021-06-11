@@ -1,19 +1,31 @@
 <?php
 
-require_once('./system/util/AllCurrenciesHelper.class.php');
-require_once('./system/util/CurrencyAdminHelper.class.php');
+/**
+ * Authors: Katija Juric, Grgo Jelavic
+ * @copyright 2021 - Exchange rate REST API
+ */
+
+require('AbstractPage.class.php');
+require_once('./system/util/AllCurrenciesHandler.class.php');
+require_once('./system/util/CurrencyAdminHandler.class.php');
 require_once('./system/model/CurrencyAdmin.class.php');
 
-class CreateCurrencyPage
+/**
+ * CreateCurrencyPage creates new iso currency code (inserts selected code in the database)
+ */
+class CreateCurrencyPage extends AbstractPage
 {
-    public function __construct()
+    /**
+     * CreateCurrencyPage logic
+     */
+    public function code()
     {
-        if (AllCurenciesHelper::validateCurrency($_GET['code'])) {
+        if (AllCurenciesHandler::validateCurrency($_GET['code'])) {
 
             $code = $_GET['code'];
 
-            (CurrencyAdminHelper::checkCurrencyInDb($code))
-                ? CurrencyAdminHelper::createCurrency($code)
+            (CurrencyAdminHandler::checkCurrencyInDb($code))
+                ? CurrencyAdminHandler::createCurrency($code)
                 : 'Duplicate error - this currency was already saved!';
         } else echo 'Unauthorized currency error - currency ISO code unknown!';
     }
