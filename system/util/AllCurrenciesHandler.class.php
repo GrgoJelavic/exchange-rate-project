@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * Authors: Katija Juric, Grgo Jelavic
+ * @copyright 2021 - Exchange rate REST API
+ */
+
 require_once('./system/util/FetchApi.class.php');
 
+/**
+ * Handles AllCurrencies database
+ * 
+ * @method 
+ * @method 
+ */
 class AllCurenciesHandler
 {
     public static function insertAllCurrencies()
