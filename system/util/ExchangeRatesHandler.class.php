@@ -29,7 +29,7 @@ class ExchangeRatesHandler
         else return true;
     }
 
-    public static function checkForSize()
+    public static function checkForDailyUpdate()
     {
         $sql = "SELECT * FROM ExchangeRates  WHERE onDate='" . date("Y-m-d") . "'";
 
@@ -47,6 +47,8 @@ class ExchangeRatesHandler
                                 ) LIMIT 1;";
 
         AppCore::getDB()->sendQuery($sql);
+
+        return true;
     }
 
     public static function insertLatestRates($code, $rate, $onDate)
@@ -54,6 +56,8 @@ class ExchangeRatesHandler
         $sql = "INSERT INTO ExchangeRates (code, rate, onDate) VALUES ('" . $code . "' , '" . $rate . "' , '" . $onDate . "')";
 
         AppCore::getDB()->sendQuery($sql);
+
+        return true;
     }
 
     public static function updateLatestRates()
@@ -83,14 +87,18 @@ class ExchangeRatesHandler
                     if ($key == $code) self::insertLatestRates($key, $value, $onDate);
             }
             echo "Latest rates inserted for date: $onDate.";
-        } elseif (self::checkForSize() != $counter) {
+        } elseif (self::checkForDailyUpdate() != $counter) {
 
             foreach ($latestRates['rates'] as $key => $value) {
 
                 foreach ($codeInDb as $code)
                     if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
             }
-            echo "Same day update is done for date: $onDate.";
+
+            if ($counter < self::checkForDailyUpdate()) echo 'The database has already been updated for today!!';
+            else echo "Same day update is for date: $onDate.";
         } else print 'The database has already been updated for today!';
+
+        return true;
     }
 }
