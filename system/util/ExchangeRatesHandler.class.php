@@ -8,9 +8,14 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
+require_once('./system/util/AllCurrenciesHandler.class.php');
+
+
 /**
+ * Handles ExchangeRates database
  * 
- * 
+ * @method 
+ * @method 
  */
 class ExchangeRatesHandler
 {
@@ -22,6 +27,33 @@ class ExchangeRatesHandler
 
         if (mysqli_num_rows($result) >= 1)  return false;
         else return true;
+    }
+
+    public static function checkForSize()
+    {
+        $sql = "SELECT * FROM ExchangeRates  WHERE onDate='" . date("Y-m-d") . "'";
+
+        $result = AppCore::getDB()->sendQuery($sql);
+
+        return (mysqli_num_rows($result));
+    }
+
+    public static function sameDayUpdate($code, $rate, $onDate)
+    {
+        $sql = "INSERT INTO ExchangeRates (code, rate, onDate)
+                                SELECT * FROM (SELECT '" . $code . "', '" . $rate . "', '" . $onDate . "') AS temp
+                                WHERE NOT EXISTS (
+                                    SELECT code, onDate FROM ExchangeRates WHERE code = '" . $code . "' AND onDate = '" . date("Y-m-d") . "'
+                                ) LIMIT 1;";
+
+        AppCore::getDB()->sendQuery($sql);
+    }
+
+    public static function insertLatestRates($code, $rate, $onDate)
+    {
+        $sql = "INSERT INTO ExchangeRates (code, rate, onDate) VALUES ('" . $code . "' , '" . $rate . "' , '" . $onDate . "')";
+
+        AppCore::getDB()->sendQuery($sql);
     }
 
     public static function updateLatestRates()
@@ -43,85 +75,22 @@ class ExchangeRatesHandler
 
         $onDate = date('Y/m/d', $latestRates['timestamp']);
 
-        // var_dump(self::checkIfAnyRateIsNull());
-
-        print $counter;
-        print(self::checkForSize());
-
         if (self::checkForUpdateDb()) {
 
             foreach ($latestRates['rates'] as $key => $value) {
 
-                foreach ($codeInDb as $code) {
-
-                    if ($key == $code) {
-
-                        $sql2 = "INSERT INTO ExchangeRates (code, rate, onDate) VALUES ('" . $key . "' , '" . $value . "' , '" . $onDate . "')";
-
-                        AppCore::getDB()->sendQuery($sql2);
-                    }
-                }
+                foreach ($codeInDb as $code)
+                    if ($key == $code) self::insertLatestRates($key, $value, $onDate);
             }
-
-            print 'hello from check for update';
+            echo "Latest rates inserted for date: $onDate.";
         } elseif (self::checkForSize() != $counter) {
-
-            print 'hello from check for size';
-
-
-            $counter = 0;
 
             foreach ($latestRates['rates'] as $key => $value) {
 
-                foreach ($codeInDb as $code) {
-
-                    print($key . ' ' . $code);
-                    // $counter++;
-                    // print $counter;
-
-
-                    if ($key == $code) continue;
-                    else {
-
-                        $sql =
-
-                            " INSERT INTO ExchangeRates (code, rate, onDate) 
-                            SELECT * FROM (SELECT '" . $key . "' AS  code, '" . $value . "' AS rate, '" . date("Y-m-d") . "' AS onDate) AS temp
-                            WHERE NOT EXISTS (SELECT code FROM CurrencyAdmin WHERE code = '" . $code . "') ";
-
-
-                        AppCore::getDB()->sendQuery($sql);
-                    }
-                }
+                foreach ($codeInDb as $code)
+                    if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
             }
+            echo "Same day update is done for date: $onDate.";
         } else print 'The database has already been updated for today!';
-    }
-
-    public static function checkForSize()
-    {
-        $sql = "SELECT * FROM ExchangeRates  WHERE onDate='" . date("Y-m-d") . "'";
-
-        $result = AppCore::getDB()->sendQuery($sql);
-
-        return (mysqli_num_rows($result));
-    }
-
-    // public static function checkIfAnyRateIsNull()
-    // {
-    //     $sql = "SELECT rate FROM ExchangeRates WHERE rate IS NULL";
-
-    //     $result = AppCore::getDB()->sendQuery($sql);
-
-    //     if (mysqli_num_rows($result) < 1)  return false;
-    //     else return true;
-    // }
-
-    public static function updateRateIfNull($rate)
-    {
-        $sql = "UPDATE ExchangeRates 
-                SET rate = {$rate}, onDate = '" . date("Y-m-d") . "'
-                WHERE onDate is NULL";
-
-        AppCore::getDB()->sendQuery($sql);
     }
 }
