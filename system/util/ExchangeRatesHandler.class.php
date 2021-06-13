@@ -86,8 +86,9 @@ class ExchangeRatesHandler
                 foreach ($codeInDb as $code)
                     if ($key == $code) self::insertLatestRates($key, $value, $onDate);
             }
-            echo "Latest rates inserted for date: $onDate.";
-        } elseif (self::checkForDailyUpdate() != $counter) {
+            //echo "Latest rates inserted for date: $onDate.";
+        }
+        if (self::checkForDailyUpdate() != $counter) {
 
             foreach ($latestRates['rates'] as $key => $value) {
 
@@ -95,10 +96,10 @@ class ExchangeRatesHandler
                     if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
             }
 
-            if ($counter < self::checkForDailyUpdate()) echo 'The database has already been updated for today!!';
-            else echo "Same day update is for date: $onDate.";
-        } else print 'The database has already been updated for today!';
-
+            //if ($counter < self::checkForDailyUpdate()) echo 'The database has already been updated for today!!';
+            //else echo "Same day update is for date: $onDate.";
+            //} else print 'The database has already been updated for today!';
+        }
         return true;
     }
 }

@@ -37,7 +37,7 @@ class AllCurenciesHandler
 
             if (mysqli_num_rows($result) === 1) return true;
             else return false;
-        } else return false;
+        } else echo 'Incorrect route!';
     }
 
     public static function checkForAllCurrencies()
