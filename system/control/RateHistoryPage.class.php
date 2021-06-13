@@ -21,6 +21,7 @@ class RateHistoryPage extends AbstractPage
      */
     public function code()
     {
-        HistoryHandler::getCurrencyRateByDate($_GET["date"], $_GET["currency"]);
+
+        HistoryHandler::getCurrencyRateByDate($_GET["date"], $_GET["code"]);
     }
 }

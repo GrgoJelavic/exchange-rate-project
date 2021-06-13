@@ -12,16 +12,13 @@ require('AbstractPage.class.php');
 require_once('./system/util/HistoryHandler.class.php');
 
 /**
- * PeriodHistoryPage displays selected currency rate history by certain period
  * 
  */
-class PeriodHistoryPage extends AbstractPage
+class TestPage extends AbstractPage
 {
     /**
-      PeriodHistoryPage displays selected currency rates by certain period
      */
     public function code()
     {
-        HistoryHandler::getRatesByPeriod($_GET["fromDate"], $_GET["toDate"], $_GET["code"]);
     }
 }
