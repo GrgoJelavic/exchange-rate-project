@@ -55,7 +55,26 @@ class HistoryHandler
         } else echo 'The incorrect route!';
     }
 
-    public static function getRatesByPeriod($fromDate, $toDate, $code)
+    public static function getRatesByPeriod($fromDate, $toDate)
+    {
+        if (isset($fromDate) && isset($toDate)) {
+
+            $fromDate = $_GET["fromDate"];
+            $toDate = $_GET["toDate"];
+
+            $sql = "SELECT code AS currency, rate, onDate AS date FROM ExchangeRates WHERE onDate >= '" . $fromDate . "' AND onDate <= '" . $toDate . "' ";
+
+            $result = AppCore::getDB()->sendQuery($sql);
+
+            $data = array();
+
+            while ($row = $result->fetch_assoc()) $data[] = $row;
+
+            echo (json_encode($data));
+        } else echo 'The incorrect route!';
+    }
+
+    public static function getRateByPeriod($fromDate, $toDate, $code)
     {
         if (isset($fromDate) && isset($toDate) && isset($code)) {
 
@@ -72,9 +91,7 @@ class HistoryHandler
             while ($row = $result->fetch_assoc()) $data[] = $row;
 
             echo (json_encode($data));
-
-            return true;
-        } else echo 'The incorrect route!';
+        } else echo 'The incorrect route';
     }
 
     public static function getDailyRatesAPI($date)

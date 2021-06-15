@@ -102,4 +102,24 @@ class ExchangeRatesHandler
         }
         return true;
     }
+
+
+    public static function getSelectedRate($code)
+    {
+        $sql = "SELECT rate FROM ExchangeRates where code = ('" . $code . "') AND onDate = '" . date("Y-m-d") . "'";
+
+        $result = AppCore::getDB()->sendQuery($sql);
+
+        $data = array();
+
+        while ($row = $result->fetch_assoc()) $data[] = $row;
+
+        (sizeof($data) === 0)
+            ? print "Wrong value!"
+            : true;
+
+        $rateInDb = array_column($data, 'rate');
+
+        foreach ($rateInDb as $rate) return number_format((float)$rate, 4, '.', '');
+    }
 }

@@ -24,9 +24,9 @@ class IndexPage extends AbstractPage
         3) Delete: <br>localhost/exchange-rate-project/index.php?page=DeleteCurrency&code=CNY <br><br>
         
         Historical exchange rates:<br>
-        4) Daily rates: <br> localhost/exchange-rate-project/index.php?page=RateHistory&date=2021-06-12 <br>
-        5) Rate on date: <br> localhost/exchange-rate-project/index.php?page=RatesHistory&date=2021-06-11&code=EUR <br>
-        6) Rate by period: <br> localhost/exchange-rate-project/index.php?page=PeriodHistory&fromDate=2021-06-11&toDate=2021-06-13&code=EUR
+        4) Daily rates: <br> localhost/exchange-rate-project/index.php?page=DailyHistory&date=2021-06-14 <br>
+        5) Rate on date: <br> localhost/exchange-rate-project/index.php?page=RateHistory&date=2021-06-11&code=EUR <br>
+        6) Rate by period: <br> localhost/exchange-rate-project/index.php?page=PeriodHistory&fromDate=2021-06-11&toDate=2021-06-14&code=EUR
         <br><br>
     
         Currency exchange: <br>

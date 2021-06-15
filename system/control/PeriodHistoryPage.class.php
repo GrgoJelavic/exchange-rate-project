@@ -22,6 +22,8 @@ class PeriodHistoryPage extends AbstractPage
      */
     public function code()
     {
-        HistoryHandler::getRatesByPeriod($_GET["fromDate"], $_GET["toDate"], $_GET["code"]);
+        (isset($_GET['fromDate']) && isset($_GET["toDate"]) && isset($_GET["code"]))
+            ? HistoryHandler::getRateByPeriod($_GET["fromDate"], $_GET["toDate"], $_GET["code"])
+            : HistoryHandler::getRatesByPeriod($_GET["fromDate"], $_GET["toDate"]);
     }
 }
