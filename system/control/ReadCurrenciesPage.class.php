@@ -14,7 +14,7 @@ require_once('./system/util/CurrencyAdminHandler.class.php');
 class ReadCurrenciesPage extends AbstractPage
 {
     /**
-     * ReadCurrenciesPage logic
+     *  Reads all currencies stored in the database
      */
     public function code()
     {

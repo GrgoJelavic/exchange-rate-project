@@ -5,22 +5,19 @@
  * @copyright 2021 - Exchange rate REST API
  */
 
-
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
 require('AbstractPage.class.php');
 require_once('./system/util/CurrencyConverterHandler.class.php');
 
-
 /**
- * CreateCurrencyPage creates new iso currency code (inserts selected code in the database)
+ * Currency converter page converts currencies (base USD)
+ *
+ * @method code implements page logic
  */
 class CurrencyConverterPage extends AbstractPage
 {
 
     /**
-     *  logic
+     *  Converts USD to or from other currencies
      */
     public function code()
     {

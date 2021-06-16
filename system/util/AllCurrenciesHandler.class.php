@@ -5,19 +5,23 @@
  * @copyright 2021 - Exchange rate REST API
  */
 
-require_once('./system/util/FetchApi.class.php');
+require_once('./system/util/ApiHandler.class.php');
 
 /**
- * Handles AllCurrencies database
+ * Handles AllCurrencies database table which is used for the currency iso code validation
  * 
- * @method 
- * @method 
+ * @method insertAllCurrencies
+ * @method validateCurrency
+ * @method checkForAllCurrencies
  */
 class AllCurenciesHandler
 {
+    /**
+     * Inserts all currencies into AllCurrencies (if database table is empty!?å) 
+     */
     public static function insertAllCurrencies()
     {
-        $latestRates = json_decode(file_get_contents("https://openexchangerates.org/api/latest.json?app_id='" . APP_ID . "'"), true);
+        $latestRates = ApiHandler::getLatestRates();
 
         foreach ($latestRates['rates'] as $key => $value) {
 
@@ -27,6 +31,11 @@ class AllCurenciesHandler
         }
     }
 
+    /**
+     * Validates currency ISO code
+     * 
+     * @return bool|void
+     */
     public static function validateCurrency($code)
     {
         if (isset($code)) {
@@ -40,6 +49,11 @@ class AllCurenciesHandler
         } else echo 'Incorrect route!';
     }
 
+    /**
+     * Checks if AllCurrencies datavase table is empty
+     * 
+     * @return bool
+     */
     public static function checkForAllCurrencies()
     {
         $sql = "SELECT * FROM AllCurrencies";

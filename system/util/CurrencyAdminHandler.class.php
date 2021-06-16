@@ -4,18 +4,22 @@
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
-
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
 /**
- * Handles CurrencyAdmin database
+ * Handles CurrencyAdmin database table for the currency administration (CRUD) 
  * 
- * @method 
- * @method 
+ * @method checkCurrencyInDb
+ * @method createCurrency
+ * @method deleteCurrency
+ * @method readCurrencies
+ * @method getCurrencies
  */
 class CurrencyAdminHandler
 {
+    /**
+     * Checks if the currency iso code is in the database table CurrencyAdmin
+     * 
+     * @return bool
+     */
     public static function checkCurrencyInDb($code)
     {
         $sql = "SELECT code FROM CurrencyAdmin WHERE code='" . $code . "'";
@@ -25,10 +29,12 @@ class CurrencyAdminHandler
         $numrow = mysqli_num_rows($result);
 
         if ($numrow > 0) return false;
-
-        return true;
+        else return true;
     }
 
+    /**
+     * Creates the currency iso code in the database table CurrencyAdmin
+     */
     public static function createCurrency($code)
     {
         $sql = "INSERT INTO CurrencyAdmin (code) VALUES ('" . $code . "')";
@@ -36,10 +42,11 @@ class CurrencyAdminHandler
         AppCore::getDB()->sendQuery($sql);
 
         echo "$code is saved to Currency Admin";
-
-        return true;
     }
 
+    /**
+     * Deletes the currency iso code from the database table CurrencyAdmin
+     */
     public static function deleteCurrency($code)
     {
         $sql = "DELETE FROM CurrencyAdmin WHERE code = '" . $code . "'";
@@ -47,11 +54,11 @@ class CurrencyAdminHandler
         AppCore::getDB()->sendQuery($sql);
 
         echo "$code is deleted from Currency Admin!";
-
-        return true;
     }
 
-
+    /**
+     * Displays all the currencies iso code from the database table CurrencyAdmin
+     */
     public static function readCurrencies()
     {
         $sql = "SELECT code FROM CurrencyAdmin";
@@ -68,6 +75,11 @@ class CurrencyAdminHandler
             : print json_encode($rows);
     }
 
+    /**
+     * Gets all currencies iso code from the database table CurrencyAdmin
+     * 
+     * @return $currencies array
+     */
     public static function getCurrencies()
     {
         $sql = "SELECT code FROM CurrencyAdmin";
