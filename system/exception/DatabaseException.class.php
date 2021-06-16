@@ -4,11 +4,12 @@
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
+require_once('./system/exception/AbstractException.class.php');
 
 /**
- * Throws database exceptions
+ * Throws database exception
  */
-class DatabaseException extends Exception
+class DatabaseException extends AbstractException
 {
     public function __construct($message = "", $code = 0, $previous = null)
     {

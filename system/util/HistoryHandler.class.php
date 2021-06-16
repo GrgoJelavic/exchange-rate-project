@@ -5,20 +5,27 @@
  * @copyright 2021 - Exchange rate REST API
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
-
 // require_once('./system/util/HistoryHandler.class.php');
 
 /**
- * Handles Rates History 
+ * Handles Rates History using database table ExchangeRates or API openexchange.org
  * 
- * @method 
- * @method 
+ * @method getDailyRates
+ * @method getCurrencyRateByDate
+ * @method getRatesByPeriod
+ * @method getRateByPeriod
+ * @method getDailyRatesAPI
+ * @method validateDate
  */
 class HistoryHandler
 {
+    /**
+     * Gets selected daily rates from ExchangeRates database table
+     * 
+     * @param $date
+     * 
+     * @return mixed 
+     */
     public static function getDailyRates($date)
     {
         if (isset($date)) {
@@ -26,20 +33,26 @@ class HistoryHandler
             $sql = "SELECT code AS currency, rate FROM ExchangeRates WHERE onDate =  '" . $date . "' ";
             $result = AppCore::getDB()->sendQuery($sql);
 
-            //Get Daily Rates from API
             $numrow = mysqli_num_rows($result);
             if ($numrow === 0) self::getDailyRatesAPI($date);
             else {
                 $data = [];
+
                 while ($row = $result->fetch_assoc()) $data[] = $row;
 
                 echo (json_encode($data));
-
-                return true;
             }
         } else echo 'The incorrect route!';
     }
 
+    /**
+     * Gets currency rate by code on selected date from ExchangeRates database table
+     * 
+     * @param $date
+     * @param $code
+     * 
+     * @return mixed 
+     */
     public static function getCurrencyRateByDate($date, $code)
     {
         if (isset($date) && isset($code)) {
@@ -55,7 +68,43 @@ class HistoryHandler
         } else echo 'The incorrect route!';
     }
 
-    public static function getRatesByPeriod($fromDate, $toDate, $code)
+    /**
+     * Gets rates by period from ExchangeRates database table
+     * 
+     * @param $fromDate
+     * @param $toDate
+     * 
+     * @return mixed 
+     */
+    public static function getRatesByPeriod($fromDate, $toDate)
+    {
+        if (isset($fromDate) && isset($toDate)) {
+
+            $fromDate = $_GET["fromDate"];
+            $toDate = $_GET["toDate"];
+
+            $sql = "SELECT code AS currency, rate, onDate AS date FROM ExchangeRates WHERE onDate >= '" . $fromDate . "' AND onDate <= '" . $toDate . "' ";
+
+            $result = AppCore::getDB()->sendQuery($sql);
+
+            $data = array();
+
+            while ($row = $result->fetch_assoc()) $data[] = $row;
+
+            echo (json_encode($data));
+        } else echo 'The incorrect route!';
+    }
+
+    /**
+     * Gets currency rate by date from ExchangeRates database table
+     * 
+     * @param $fromDate
+     * @param $toDate
+     * @param $code
+     * 
+     * @return mixed 
+     */
+    public static function getRateByPeriod($fromDate, $toDate, $code)
     {
         if (isset($fromDate) && isset($toDate) && isset($code)) {
 
@@ -72,16 +121,21 @@ class HistoryHandler
             while ($row = $result->fetch_assoc()) $data[] = $row;
 
             echo (json_encode($data));
-
-            return true;
-        } else echo 'The incorrect route!';
+        } else echo 'The incorrect route';
     }
 
+    /**
+     * Gets exchange rates on selected day from API openexchangerates.org
+     * 
+     * @param $date
+     * 
+     * @return mixed 
+     */
     public static function getDailyRatesAPI($date)
     {
         if (self::validateDate($date)) {
 
-            $latestRates = json_decode(file_get_contents("https://openexchangerates.org/api/historical/$date.json?app_id='" . APP_ID . "'"), true);
+            $latestRates = ApiHandler::getRatesHistory($date);
 
             print 'Date: ' . $date . '<br>';
 
@@ -92,6 +146,14 @@ class HistoryHandler
         } else echo 'The invalid route, selected date format is incorrect!';
     }
 
+    /**
+     * Validates date - parses a string into a new DateTime object according to the specified format
+     * 
+     * @param $date
+     * @param $format
+     * 
+     * @return $date formatted according to given format 
+     */
     public static function validateDate($date, $format = 'Y-m-d')
     {
         $d = DateTime::createFromFormat($format, $date);

@@ -9,16 +9,26 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
 require_once('./system/util/AllCurrenciesHandler.class.php');
+require_once('./system/util/ApiHandler.class.php');
 
 
 /**
- * Handles ExchangeRates database
+ * Handles ExchangeRates database table
  * 
- * @method 
- * @method 
+ * @method checkForUpdateDb
+ * @method checkForDailyUpdate
+ * @method sameDayUpdate
+ * @method insertLatestRates
+ * @method updateLatestRates
+ * @method getSelectedRate
  */
 class ExchangeRatesHandler
 {
+    /**
+     * Checks if ExchangeRates database table is updated by date
+     * 
+     * @return bool 
+     */
     public static function checkForUpdateDb()
     {
         $sql = "SELECT * FROM ExchangeRates WHERE onDate='" . date("Y-m-d") . "'";
@@ -29,15 +39,26 @@ class ExchangeRatesHandler
         else return true;
     }
 
+    /**
+     * Checks size result of ExchangeRates database table which is updated by date 
+     * 
+     * @return mixed 
+     */
     public static function checkForDailyUpdate()
     {
-        $sql = "SELECT * FROM ExchangeRates  WHERE onDate='" . date("Y-m-d") . "'";
+        $sql = "SELECT * FROM ExchangeRates WHERE onDate='" . date("Y-m-d") . "'";
 
         $result = AppCore::getDB()->sendQuery($sql);
 
         return (mysqli_num_rows($result));
     }
 
+
+    /**
+     * Updates rates of Exchange rates on the same day (used if the currency is created after daily update) 
+     * 
+     * @return mixed 
+     */
     public static function sameDayUpdate($code, $rate, $onDate)
     {
         $sql = "INSERT INTO ExchangeRates (code, rate, onDate)
@@ -47,19 +68,23 @@ class ExchangeRatesHandler
                                 ) LIMIT 1;";
 
         AppCore::getDB()->sendQuery($sql);
-
-        return true;
     }
 
+
+    /**
+     * Inserts latest rates into ExchangeRates database table 
+     */
     public static function insertLatestRates($code, $rate, $onDate)
     {
         $sql = "INSERT INTO ExchangeRates (code, rate, onDate) VALUES ('" . $code . "' , '" . $rate . "' , '" . $onDate . "')";
 
         AppCore::getDB()->sendQuery($sql);
-
-        return true;
     }
 
+
+    /**
+     * Update latest rates
+     */
     public static function updateLatestRates()
     {
         $sql = "SELECT code FROM CurrencyAdmin";
@@ -74,32 +99,43 @@ class ExchangeRatesHandler
         }
 
         $codeInDb = array_column($data, 'code');
-
-        $latestRates = json_decode(file_get_contents("https://openexchangerates.org/api/latest.json?app_id='" . APP_ID . "'"), true);
-
+        $latestRates = ApiHandler::getLatestRates();
         $onDate = date('Y/m/d', $latestRates['timestamp']);
 
-        if (self::checkForUpdateDb()) {
+        if (self::checkForUpdateDb())
+            foreach ($latestRates['rates'] as $key => $value)
+                foreach ($codeInDb as $code) if ($key == $code) self::insertLatestRates($key, $value, $onDate);
 
-            foreach ($latestRates['rates'] as $key => $value) {
 
-                foreach ($codeInDb as $code)
-                    if ($key == $code) self::insertLatestRates($key, $value, $onDate);
-            }
-            //echo "Latest rates inserted for date: $onDate.";
-        }
-        if (self::checkForDailyUpdate() != $counter) {
+        if (self::checkForDailyUpdate() != $counter)
+            foreach ($latestRates['rates'] as $key => $value)
+                foreach ($codeInDb as $code) if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
+    }
 
-            foreach ($latestRates['rates'] as $key => $value) {
 
-                foreach ($codeInDb as $code)
-                    if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
-            }
+    /**
+     * Gets selected rate on the certain date 
+     * 
+     * @param string
+     * 
+     * @return mixed 
+     */
+    public static function getSelectedRate($code)
+    {
+        $sql = "SELECT rate FROM ExchangeRates where code = ('" . $code . "') AND onDate = '" . date("Y-m-d") . "'";
 
-            //if ($counter < self::checkForDailyUpdate()) echo 'The database has already been updated for today!!';
-            //else echo "Same day update is for date: $onDate.";
-            //} else print 'The database has already been updated for today!';
-        }
-        return true;
+        $result = AppCore::getDB()->sendQuery($sql);
+
+        $data = array();
+
+        while ($row = $result->fetch_assoc()) $data[] = $row;
+
+        (sizeof($data) === 0)
+            ? print "Wrong value!"
+            : true;
+
+        $rateInDb = array_column($data, 'rate');
+
+        foreach ($rateInDb as $rate) return number_format((float)$rate, 4, '.', '');
     }
 }

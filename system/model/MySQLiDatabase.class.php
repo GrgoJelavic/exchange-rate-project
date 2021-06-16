@@ -1,13 +1,9 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'on');
-
 /**
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
-
 /** 
  * Database implementation
  */

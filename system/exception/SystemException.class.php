@@ -4,17 +4,17 @@
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
+require_once('./system/exception/AbstractException.class.php');
 
 /**
- * Throws system exceptions
+ * Throws system exception
  */
-class SystemException extends Exception
+class SystemException extends AbstractException
 {
     public function __construct($message = "", $code = 0, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
-
     /** 
      * Returns auto functions message from exception if there is any error
      * 

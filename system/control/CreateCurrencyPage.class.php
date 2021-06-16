@@ -12,17 +12,19 @@ require_once('./system/util/CurrencyAdminHandler.class.php');
 
 /**
  * CreateCurrencyPage creates new iso currency code (inserts selected code in the database)
+ * 
+ * @method code implements page logic
  */
 class CreateCurrencyPage extends AbstractPage
 {
     /**
-     * CreateCurrencyPage logic
+     * Validate if currency ISO code exists and it creates currency if it not exists in the database
      */
     public function code()
     {
         if (AllCurenciesHandler::validateCurrency($_GET['code'])) {
 
-            $code = $_GET['code'];
+            $code = strtoupper($_GET['code']);
 
             (CurrencyAdminHandler::checkCurrencyInDb($code))
                 ? CurrencyAdminHandler::createCurrency($code)

@@ -10,17 +10,19 @@ require_once('./system/util/CurrencyAdminHandler.class.php');
 
 /**
  * DeleteCurrencyPage deletes iso currency code (deletes selected code in the database)
+ * 
+ * @method code implements page logic
  */
 class DeleteCurrencyPage extends AbstractPage
 {
     /**
-     * DeleteCurrencyPage logic
+     * Deletes currency if it exists in the database
      */
     public function code()
     {
         if (isset($_GET['code'])) {
 
-            $code = $_GET['code'];
+            $code = strtoupper($_GET['code']);
 
             (!CurrencyAdminHandler::checkCurrencyInDb($code))
                 ? CurrencyAdminHandler::deleteCurrency($code)
