@@ -34,11 +34,32 @@ class HistoryHandler
             $result = AppCore::getDB()->sendQuery($sql);
 
             $numrow = mysqli_num_rows($result);
-            if ($numrow === 0) self::getDailyRatesAPI($date);
-            else {
+
+            if ($numrow === 0) {
+
+                $sql = "SELECT code FROM CurrencyAdmin";
+                $result = AppCore::getDB()->sendQuery($sql);
+
+                $data = array();
+                $counter = 0;
+
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                    $counter++;
+                }
+
+                $codeInDb = array_column($data, 'code');
+                $latestRates = ApiHandler::getLatestRates();
+                $onDate = date('Y/m/d', $latestRates['timestamp']);
+
+                foreach ($latestRates['rates'] as $key => $value)
+                    foreach ($codeInDb as $code) if ($key == $code)
+                        print($key . ' ' . $value . '<br>');
+            } else {
                 $data = [];
 
-                while ($row = $result->fetch_assoc()) $data[] = $row;
+                while ($row = $result->fetch_assoc())
+                    $data[] = $row;
 
                 echo (json_encode($data));
             }
@@ -60,11 +81,30 @@ class HistoryHandler
             $sql = "SELECT code AS currency, rate FROM ExchangeRates WHERE onDate =  '" . $date . "' AND code = '" . $code . "'";
             $result = AppCore::getDB()->sendQuery($sql);
 
-            $data = array();
+            $numrow = mysqli_num_rows($result);
 
-            while ($row = $result->fetch_assoc()) $data[] = $row;
+            if ($numrow === 0) {
 
-            echo (json_encode($data));
+                $sql = "SELECT code FROM CurrencyAdmin";
+                $result = AppCore::getDB()->sendQuery($sql);
+
+                $data = array();
+
+                while ($row = $result->fetch_assoc())
+                    $data[] = $row;
+
+                $latestRates = ApiHandler::getRatesHistory($date);
+
+                foreach ($latestRates['rates'] as $key => $value)
+                    if ($key == $code) print($key . ' ' . $value . '<br>');
+            } else {
+                $data = [];
+
+                while ($row = $result->fetch_assoc())
+                    $data[] = $row;
+
+                echo (json_encode($data));
+            }
         } else echo 'The incorrect route!';
     }
 
@@ -141,6 +181,51 @@ class HistoryHandler
 
             foreach ($latestRates['rates'] as $key => $value)
                 print($key . ' ' . $value . '<br>');
+
+            return true;
+        } else echo 'The invalid route, selected date format is incorrect!';
+    }
+
+    /**
+     * Gets exchange rate on selected day for selected currncy from API openexchangerates.org
+     * 
+     * @param $date
+     * 
+     * @return mixed 
+     */
+    public static function getDailyRateAPI($date, $code)
+    {
+        if (self::validateDate($date)) {
+
+            $latestRates = ApiHandler::getRatesHistory($date);
+
+            // print 'Date: ' . $date . '<br>';
+
+            // foreach ($latestRates['rates'] as $key => $value)
+            //     print($key . ' ' . $value . '<br>');
+
+            /////
+
+
+            $sql = "SELECT code FROM CurrencyAdmin";
+            $result = AppCore::getDB()->sendQuery($sql);
+
+            $data = array();
+            $counter = 0;
+
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+                $counter++;
+            }
+
+            $codeInDb = array_column($data, 'code');
+            $latestRates = ApiHandler::getLatestRates();
+            $onDate = date('Y/m/d', $latestRates['timestamp']);
+
+            /////
+
+            foreach ($latestRates['rates'] as $key => $value)
+                foreach ($codeInDb as $code) if ($key == $code) HistoryHandler::getDailyRates($key, $value, $onDate);
 
             return true;
         } else echo 'The invalid route, selected date format is incorrect!';

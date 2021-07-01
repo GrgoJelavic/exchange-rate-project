@@ -102,6 +102,7 @@ class ExchangeRatesHandler
         $latestRates = ApiHandler::getLatestRates();
         $onDate = date('Y/m/d', $latestRates['timestamp']);
 
+        /////
         if (self::checkForUpdateDb())
             foreach ($latestRates['rates'] as $key => $value)
                 foreach ($codeInDb as $code) if ($key == $code) self::insertLatestRates($key, $value, $onDate);
