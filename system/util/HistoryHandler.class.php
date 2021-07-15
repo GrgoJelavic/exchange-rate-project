@@ -11,11 +11,11 @@
  * Handles Rates History using database table ExchangeRates or API openexchange.org
  * 
  * @method getDailyRates
+ * @method validateDate
  * @method getCurrencyRateByDate
  * @method getRatesByPeriod
  * @method getRateByPeriod
  * @method getDailyRatesAPI
- * @method validateDate
  */
 class HistoryHandler
 {
@@ -190,7 +190,6 @@ class HistoryHandler
      * Gets exchange rate on selected day for selected currncy from API openexchangerates.org
      * 
      * @param $date
-     * 
      * @return mixed 
      */
     public static function getDailyRateAPI($date, $code)
@@ -230,6 +229,7 @@ class HistoryHandler
             return true;
         } else echo 'The invalid route, selected date format is incorrect!';
     }
+
 
     /**
      * Validates date - parses a string into a new DateTime object according to the specified format

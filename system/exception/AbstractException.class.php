@@ -11,7 +11,6 @@
  */
 abstract class AbstractException extends Exception
 {
-
     /**
      * Logic has to be implemented for every page (subclass)
      */
