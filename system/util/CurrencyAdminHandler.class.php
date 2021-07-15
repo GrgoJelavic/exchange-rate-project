@@ -71,7 +71,7 @@ class CurrencyAdminHandler
             $rows[] = $r;
 
         (sizeof($rows) === 0)
-            ? print "There is no any currency saved in the database!"
+            ? print "There isn't any currency saved in the database!"
             : print json_encode($rows);
     }
 

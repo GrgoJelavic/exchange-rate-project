@@ -16,7 +16,8 @@ require_once('./system/util/HistoryHandler.class.php');
  */
 class TestPage extends AbstractPage
 {
-    /**
+    /*
+     *
      */
     public function code()
     {
