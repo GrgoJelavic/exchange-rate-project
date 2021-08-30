@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
 require('AbstractPage.class.php');
-require_once('./system/util/HistoryHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/HistoryHandler.class.php');
 
 /**
  * 

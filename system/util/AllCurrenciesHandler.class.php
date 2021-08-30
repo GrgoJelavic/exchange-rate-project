@@ -5,7 +5,7 @@
  * @copyright 2021 - Exchange rate REST API
  */
 
-require_once('./system/util/ApiHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/ApiHandler.class.php');
 
 /**
  * Handles AllCurrencies database table which is used for the currency iso code validation

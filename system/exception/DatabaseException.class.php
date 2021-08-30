@@ -4,7 +4,7 @@
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
-require_once('./system/exception/AbstractException.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/exception/AbstractException.class.php');
 
 /**
  * Throws database exception

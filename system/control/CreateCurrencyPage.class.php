@@ -6,8 +6,8 @@
  */
 
 require('AbstractPage.class.php');
-require_once('./system/util/AllCurrenciesHandler.class.php');
-require_once('./system/util/CurrencyAdminHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/AllCurrenciesHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/CurrencyAdminHandler.class.php');
 //require_once('./system/model/CurrencyAdmin.class.php');
 
 /**

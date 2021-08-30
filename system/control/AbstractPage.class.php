@@ -4,8 +4,8 @@
  * Authors: Katija Juric, Grgo Jelavic
  * @copyright 2021 - Exchange rate REST API
  */
-require_once('./system/util/AllCurrenciesHandler.class.php');
-require_once('./system/util/ExchangeRatesHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/AllCurrenciesHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/ExchangeRatesHandler.class.php');
 
 /**
  * ApstractPage is base class for all pages and it includes apstract method code
