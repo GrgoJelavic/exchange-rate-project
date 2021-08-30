@@ -6,7 +6,7 @@
  */
 
 require('AbstractPage.class.php');
-require_once('./system/util/HistoryHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/HistoryHandler.class.php');
 
 /**
  * RateHistoryPage displays rate history by certain date and rates history by period

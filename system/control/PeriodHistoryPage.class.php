@@ -6,7 +6,7 @@
  */
 
 require('AbstractPage.class.php');
-require_once('./system/util/HistoryHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/HistoryHandler.class.php');
 
 /**
  * PeriodHistoryPage displays selected currency rate history by certain period

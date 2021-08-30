@@ -72,7 +72,7 @@ class CurrencyAdminHandler
 
         (sizeof($rows) === 0)
             ? print "There isn't any currency saved in the database!"
-            : print json_encode($rows);
+            : print json_encode(json_encode($rows));
     }
 
     /**
@@ -90,5 +90,31 @@ class CurrencyAdminHandler
             $currencies[] = $row;
 
         return $currencies;
+    }
+
+    /**
+     * Prints currencies code
+     * 
+     * @return $currencies array
+     */
+    public static function printCurrencyCode()
+    {
+        $sql = "SELECT code FROM CurrencyAdmin";
+
+        $result = AppCore::getDB()->sendQuery($sql);
+
+        while ($row = $result->fetch_assoc())
+            $currencies[] = $row;
+
+        foreach ($currencies as $curr) {
+            // var_dump($curr);
+            json_decode($curr, true);
+            echo '<br><option value="' . $curr['code'] . '">' . $curr['code'] . '</option>';
+        }
+
+
+        // $currencies = json_decode($currencies, true);
+        // echo $json['code'];
+        //return $currencies;
     }
 }

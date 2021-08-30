@@ -3,14 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
-require('../AppCore.class.php');
-require_once('./../util/CurrencyAdminHandler.class.php');
-
-
-
+require('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/AppCore.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/CurrencyAdminHandler.class.php');
 
 ?>
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,11 +24,14 @@ require_once('./../util/CurrencyAdminHandler.class.php');
         <form action="" method="get">
 
             <?php
+            // echo '<br>';
             $app = new AppCore;
-            $currencies = CurrencyAdminHandler::readCurrencies();
 
-            foreach ($currencies as $curr)
-                echo '<option value="' . $curr . '">' . $curr . '</option>';
+
+            foreach (CurrencyAdminHandler::printCurrencyCode() as $curr) {
+                // var_dump($curr);
+                echo '<br><option value="' . $curr . '">' . $curr . '</option>';
+            }
             //$currencies = CurrencyAdminHandler::readCurrencies();
             //var_dump(CurrencyAdminHandler::readCurrencies());
             ?>
@@ -54,4 +54,4 @@ require_once('./../util/CurrencyAdminHandler.class.php');
         </form>
     </div>
 
-</html>
+</html> -->

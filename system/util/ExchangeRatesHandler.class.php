@@ -8,8 +8,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
-require_once('./system/util/AllCurrenciesHandler.class.php');
-require_once('./system/util/ApiHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/AllCurrenciesHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/ApiHandler.class.php');
 
 
 /**
@@ -107,7 +107,6 @@ class ExchangeRatesHandler
             foreach ($latestRates['rates'] as $key => $value)
                 foreach ($codeInDb as $code) if ($key == $code) self::insertLatestRates($key, $value, $onDate);
 
-
         if (self::checkForDailyUpdate() != $counter)
             foreach ($latestRates['rates'] as $key => $value)
                 foreach ($codeInDb as $code) if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
@@ -129,7 +128,8 @@ class ExchangeRatesHandler
 
         $data = array();
 
-        while ($row = $result->fetch_assoc()) $data[] = $row;
+        while ($row = $result->fetch_assoc())
+            $data[] = $row;
 
         (sizeof($data) === 0)
             ? print "Wrong value!"

@@ -6,7 +6,7 @@
  */
 
 require('AbstractPage.class.php');
-require_once('./system/util/CurrencyAdminHandler.class.php');
+require_once('/Applications/XAMPP/xamppfiles/htdocs/exchange-rate-project/system/util/CurrencyAdminHandler.class.php');
 
 /**
  * ReadCurrenciesPage displays all currencies stored in the database
