@@ -17,12 +17,12 @@ class CurrencyConverterHandler
     {
         if (isset($from) && isset($to) && isset($amount)) {
 
-            if (strtoupper($from) !== 'USD' && strtoupper($to) !== 'USD')
-                print  'Total: ' . (float)$amount / ExchangeRatesHandler::getSelectedRate($from) * ExchangeRatesHandler::getSelectedRate($to) . ' ' .  strtoupper($from) . '<br>';
-
             if (strtoupper($from) === 'USD') print 'Total: ' . (float)$amount * ExchangeRatesHandler::getSelectedRate($to) . ' ' .  strtoupper($to)  . '<br>';
 
             if (strtoupper($to) === 'USD') print  'Total: ' . (float)$amount / ExchangeRatesHandler::getSelectedRate($from) . ' ' .  strtoupper($from) . '<br>';
+
+            if (strtoupper($from) !== 'USD' && strtoupper($to) !== 'USD')
+                print  'Total: ' . (float)$amount / ExchangeRatesHandler::getSelectedRate($from) * ExchangeRatesHandler::getSelectedRate($to) . ' ' .  strtoupper($from) . '<br>';
         }
     }
 }
