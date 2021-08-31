@@ -20,7 +20,7 @@ class RequestHandler
         // include class
         require_once($classPath);
 
-        // //execute class
+        // execute class
         if (!class_exists($className)) {
             throw new SystemException("Class '" . $className . "' not found");
         }

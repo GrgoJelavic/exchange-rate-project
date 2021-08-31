@@ -53,7 +53,6 @@ class ExchangeRatesHandler
         return (mysqli_num_rows($result));
     }
 
-
     /**
      * Updates rates of Exchange rates on the same day (used if the currency is created after daily update) 
      * 
@@ -70,9 +69,10 @@ class ExchangeRatesHandler
         AppCore::getDB()->sendQuery($sql);
     }
 
-
     /**
      * Inserts latest rates into ExchangeRates database table 
+     * 
+     * @return void
      */
     public static function insertLatestRates($code, $rate, $onDate)
     {
@@ -81,9 +81,10 @@ class ExchangeRatesHandler
         AppCore::getDB()->sendQuery($sql);
     }
 
-
     /**
      * Update latest rates
+     * 
+     * @return void
      */
     public static function updateLatestRates()
     {
@@ -102,17 +103,14 @@ class ExchangeRatesHandler
         $latestRates = ApiHandler::getLatestRates();
         $onDate = date('Y/m/d', $latestRates['timestamp']);
 
-        /////
         if (self::checkForUpdateDb())
             foreach ($latestRates['rates'] as $key => $value)
                 foreach ($codeInDb as $code) if ($key == $code) self::insertLatestRates($key, $value, $onDate);
-
 
         if (self::checkForDailyUpdate() != $counter)
             foreach ($latestRates['rates'] as $key => $value)
                 foreach ($codeInDb as $code) if ($key == $code) self::sameDayUpdate($key, $value, $onDate);
     }
-
 
     /**
      * Gets selected rate on the certain date 

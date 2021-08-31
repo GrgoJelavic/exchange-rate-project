@@ -16,7 +16,7 @@ require_once('./system/util/HistoryHandler.class.php');
 class RateHistoryPage extends AbstractPage
 {
     /**
-     * gets the currency rates by the certain date 
+     * Gets the currency rates by the certain date 
      */
     public function code()
     {

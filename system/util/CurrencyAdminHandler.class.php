@@ -34,6 +34,8 @@ class CurrencyAdminHandler
 
     /**
      * Creates the currency iso code in the database table CurrencyAdmin
+     * 
+     * @return void
      */
     public static function createCurrency($code)
     {
@@ -46,6 +48,8 @@ class CurrencyAdminHandler
 
     /**
      * Deletes the currency iso code from the database table CurrencyAdmin
+     * 
+     * @return void
      */
     public static function deleteCurrency($code)
     {
@@ -58,6 +62,8 @@ class CurrencyAdminHandler
 
     /**
      * Displays all the currencies iso code from the database table CurrencyAdmin
+     * 
+     * @return void
      */
     public static function readCurrencies()
     {

@@ -9,7 +9,7 @@ require('AbstractPage.class.php');
 require_once('./system/util/CurrencyAdminHandler.class.php');
 
 /**
- * DeleteCurrencyPage deletes iso currency code (deletes selected code in the database)
+ * DeleteCurrencyPage deletes iso currency code (deletes selected code in the database CurrencyAdmin)
  * 
  * @method code implements page logic
  */

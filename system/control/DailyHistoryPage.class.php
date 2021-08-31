@@ -15,7 +15,9 @@ require_once('./system/util/HistoryHandler.class.php');
 class DailyHistoryPage extends AbstractPage
 {
     /**
-     * Displays daily rates on certain date
+     * Displays daily rates on certain date 
+     * 
+     * Displays from database table ExchangeRates, if it's not stored then gets data from API openexchangerates.org
      */
     public function code()
     {

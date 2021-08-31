@@ -9,12 +9,12 @@ require('AbstractPage.class.php');
 require_once('./system/util/CurrencyAdminHandler.class.php');
 
 /**
- * ReadCurrenciesPage displays all currencies stored in the database
+ * ReadCurrenciesPage displays all currencies stored in the database table CurrencyAdmin
  */
 class ReadCurrenciesPage extends AbstractPage
 {
     /**
-     *  Reads all currencies stored in the database
+     *  Reads all currencies stored in the database table CurrencyAdmin
      */
     public function code()
     {

@@ -6,7 +6,7 @@
  */
 
 /**
- * Handles view control
+ * Handles view controler
  */
 class ControlViewHandler
 {

@@ -17,13 +17,13 @@ require_once('./system/util/ApiHandler.class.php');
 class AllCurenciesHandler
 {
     /**
-     * Inserts all currencies into AllCurrencies (if database table is empty!?å) 
+     * Inserts all currencies into table AllCurrencies (if database table is empty) 
      */
     public static function insertAllCurrencies()
     {
         $latestRates = ApiHandler::getLatestRates();
 
-        foreach ($latestRates['rates'] as $key => $value) {
+        foreach ($latestRates['rates'] as $key) {
 
             $sql = "INSERT INTO AllCurrencies(code) VALUES ('" . $key . "' )";
 
@@ -50,7 +50,7 @@ class AllCurenciesHandler
     }
 
     /**
-     * Checks if AllCurrencies datavase table is empty
+     * Checks if AllCurrencies database table is empty
      * 
      * @return bool
      */

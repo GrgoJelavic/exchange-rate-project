@@ -7,7 +7,7 @@
 
 
 /**
- * Handles openexchangerates.org JSON API to get latest rates and historical data
+ * Handles openexchangerates.org JSON API to get currency codes, latest rates and historical data
  * 
  * @method getLatestRates
  * @method getRatesHistory

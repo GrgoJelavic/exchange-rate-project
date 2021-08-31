@@ -16,7 +16,9 @@ require_once('./system/util/HistoryHandler.class.php');
 class PeriodHistoryPage extends AbstractPage
 {
     /**
-      PeriodHistoryPage displays selected currency history rates by certain period
+     * PeriodHistoryPage displays selected currency history rates by certain period
+     * 
+     * Displays all history rates by certain period if there currency is not specified
      */
     public function code()
     {

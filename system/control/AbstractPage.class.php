@@ -19,7 +19,10 @@ abstract class AbstractPage
     public function __construct()
     {
         $obj = $this->code();
-        if (!AllCurenciesHandler::checkForAllCurrencies()) AllCurenciesHandler::insertAllCurrencies();
+
+        if (!AllCurenciesHandler::checkForAllCurrencies())
+            AllCurenciesHandler::insertAllCurrencies();
+
         ExchangeRatesHandler::updateLatestRates();
     }
 

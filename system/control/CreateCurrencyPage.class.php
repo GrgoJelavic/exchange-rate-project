@@ -28,7 +28,8 @@ class CreateCurrencyPage extends AbstractPage
 
             (CurrencyAdminHandler::checkCurrencyInDb($code))
                 ? CurrencyAdminHandler::createCurrency($code)
-                : 'Duplicate error - this currency was already saved!';
-        } else echo 'Unauthorized currency error - currency ISO code unknown!';
+                : print 'Duplicate error - this currency was already saved!';
+        } else
+            echo 'Unauthorized currency error - currency ISO code unknown!';
     }
 }

@@ -50,7 +50,6 @@ class HistoryHandler
 
                 $codeInDb = array_column($data, 'code');
                 $latestRates = ApiHandler::getLatestRates();
-                $onDate = date('Y/m/d', $latestRates['timestamp']);
 
                 foreach ($latestRates['rates'] as $key => $value)
                     foreach ($codeInDb as $code) if ($key == $code)
@@ -95,8 +94,23 @@ class HistoryHandler
 
                 $latestRates = ApiHandler::getRatesHistory($date);
 
-                foreach ($latestRates['rates'] as $key => $value)
-                    if ($key == $code) print($key . ' ' . $value . '<br>');
+                foreach ($latestRates['rates'] as $key => $value) {
+                    if ($key == $code) {
+                        //print($key . ' ' . $value . '<br>');
+                        // var_dump($value);
+                        $dataObj = new stdClass();
+                        $dataObj->currency = $key;
+                        $dataObj->rate =  number_format((float)$value, 6);
+
+                        $dataJSON = json_encode($dataObj);
+                        echo $dataJSON;
+
+                        // array($curr, $key, $rate, $value);
+                        // $json = json_encode($data);
+                        // header('Content-Type: application/json');
+                        // echo $json;
+                    }
+                }
             } else {
                 $data = [];
 

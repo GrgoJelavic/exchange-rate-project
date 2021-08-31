@@ -16,7 +16,7 @@ require_once('./system/util/CurrencyConverterHandler.class.php');
 class CurrencyConverterPage extends AbstractPage
 {
     /**
-     *  Converts USD to or from other currencies
+     *  Converts latest exchange rates stored in the database table ExchangeRates
      */
     public function code()
     {
