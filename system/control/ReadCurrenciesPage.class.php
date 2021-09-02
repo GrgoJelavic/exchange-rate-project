@@ -19,5 +19,6 @@ class ReadCurrenciesPage extends AbstractPage
     public function code()
     {
         CurrencyAdminHandler::readCurrencies();
+        echo ' test';
     }
 }

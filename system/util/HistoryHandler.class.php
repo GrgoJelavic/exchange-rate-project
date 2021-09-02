@@ -5,7 +5,7 @@
  * @copyright 2021 - Exchange rate REST API
  */
 
-// require_once('./system/util/HistoryHandler.class.php');
+require_once('./system/util/HistoryHandler.class.php');
 
 /**
  * Handles Rates History using database table ExchangeRates or API openexchange.org

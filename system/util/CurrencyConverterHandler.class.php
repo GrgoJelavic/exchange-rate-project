@@ -22,7 +22,7 @@ class CurrencyConverterHandler
             if (strtoupper($to) === 'USD') print  'Total: ' . (float)$amount / ExchangeRatesHandler::getSelectedRate($from) . ' ' .  strtoupper($from) . '<br>';
 
             if (strtoupper($from) !== 'USD' && strtoupper($to) !== 'USD')
-                print  'Total: ' . (float)$amount / ExchangeRatesHandler::getSelectedRate($from) * ExchangeRatesHandler::getSelectedRate($to) . ' ' .  strtoupper($from) . '<br>';
+                print  'Total: ' . (float)$amount / ExchangeRatesHandler::getSelectedRate($from) * ExchangeRatesHandler::getSelectedRate($to) . ' ' .  strtoupper($to) . '<br>';
         }
     }
 }
